@@ -8,86 +8,86 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --primary: #4361ee;
+            --primary: #62c277;
             --primary-light: #e0e7ff;
-            --secondary: #3a0ca3;
-            --accent: #7209b7;
+            --secondary: #254e67;
+            --accent: #3ff2f5;
             --success: #4cc9f0;
             --warning: #f72585;
             --info: #4895ef;
             --light: #f8f9fa;
-            --dark: #212529;
-            --card-bg: #ffffff;
-            --sidebar-bg: #f8fafc;
-            --border: #e2e8f0;
-            --text: #334155;
+            --dark: #26435e;
+            --card-bg: rgba(238, 240, 233, 0.85);
+            --sidebar-bg: rgba(201, 225, 249, 0.85);
+            --border: #066e20;
+            --text: #03234f;
             --text-light: #64748b;
         }
 
         .dark-theme {
-            --primary: #4895ef;
-            --primary-light: #1e293b;
-            --secondary: #3a0ca3;
-            --accent: #7209b7;
+            --primary: #efc048fb;
+            --primary-light: #122e58;
+            --secondary: #2e1764;
+            --accent: #c16f23;
             --success: #4cc9f0;
             --warning: #f72585;
             --info: #4895ef;
-            --light: #0f172a;
-            --dark: #f8f9fa;
-            --card-bg: #1e293b;
-            --sidebar-bg: #0f172a;
-            --border: #334155;
-            --text: #e2e8f0;
-            --text-light: #94a3b8;
+            --light: rgba(21, 48, 59, 0.85);
+            --dark: #aea2a2;
+            --card-bg: rgba(15, 27, 44, 0.85);
+            --sidebar-bg: rgba(14, 26, 36, 0.85);
+            --border: #c26363;
+            --text: #ffffff;
+            --text-light: #53ffb7;
         }
 
         .semi-dark-theme {
-            --primary: #4895ef;
+            --primary: #2ec0cd;
             --primary-light: #334155;
-            --secondary: #3a0ca3;
-            --accent: #7209b7;
+            --secondary: #5dc6be;
+            --accent: #2973afd7;
             --success: #4cc9f0;
             --warning: #f72585;
             --info: #4895ef;
-            --light: #1e293b;
+            --light: rgba(30, 41, 59, 0.85);
             --dark: #f8f9fa;
-            --card-bg: #334155;
-            --sidebar-bg: #1e293b;
+            --card-bg: rgba(64, 70, 89, 0.85);
+            --sidebar-bg: rgba(30, 41, 59, 0.85);
             --border: #475569;
-            --text: #e2e8f0;
-            --text-light: #94a3b8;
+            --text: #ffffff;
+            --text-light: #8b9bb3;
         }
 
         .colorful-theme {
-            --primary: #ff6b6b;
-            --primary-light: #ffebee;
-            --secondary: #4ecdc4;
-            --accent: #ffd166;
+            --primary: #da3535;
+            --primary-light: #dce1a0;
+            --secondary: #45c0b8;
+            --accent: #f7d438d6;
             --success: #06d6a0;
-            --warning: #ff9e00;
+            --warning: #ff0400;
             --info: #118ab2;
-            --light: #f8f9fa;
+            --light: rgba(252, 208, 222, 0.85);
             --dark: #212529;
-            --card-bg: #ffffff;
-            --sidebar-bg: #f8fafc;
-            --border: #e2e8f0;
-            --text: #334155;
-            --text-light: #64748b;
+            --card-bg: rgba(255, 251, 241, 0.85);
+            --sidebar-bg: rgba(255, 235, 144, 0.85);
+            --border: #8e6f01;
+            --text: #0b4216;
+            --text-light: #27305e;
         }
 
         .ocean-theme {
-            --primary: #1a73e8;
+            --primary: #55aaff;
             --primary-light: #e8f0fe;
             --secondary: #0d47a1;
             --accent: #00bcd4;
             --success: #0f9d58;
-            --warning: #f4b400;
-            --info: #4285f4;
-            --light: #f8f9fa;
+            --warning: #fc4333;
+            --info: #64c6de;
+            --light: rgba(210, 226, 255, 0.85);
             --dark: #212529;
-            --card-bg: #ffffff;
-            --sidebar-bg: #f8fafc;
-            --border: #e2e8f0;
+            --card-bg: rgba(198, 234, 251, 0.85);
+            --sidebar-bg: rgba(173, 227, 245, 0.85);
+            --border: #152131;
             --text: #334155;
             --text-light: #64748b;
         }
@@ -100,11 +100,303 @@
         }
 
         body {
-            background: linear-gradient(135deg, #f0f4ff 0%, #f8fafc 100%);
+            background: linear-gradient(135deg, #142145 0%, #082c2e 100%);
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
             transition: all 0.3s ease;
+            position: relative;
+        }
+
+        /* Theme-specific background animations */
+        .theme-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* Light theme - Sun rays */
+        .light-theme-bg {
+            background: linear-gradient(135deg, #0557447f 0%, #1acef368 100%);
+        }
+
+        .light-theme-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(255, 255, 200, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 255, 200, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(255, 255, 200, 0.4) 0%, transparent 50%);
+            animation: sunRays 20s infinite linear;
+        }
+
+        @keyframes sunRays {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Dark theme - Stars */
+        .dark-theme-bg {
+            background: linear-gradient(135deg, #090d18 0%, #1a1a2e 100%);
+        }
+
+        .dark-theme-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                radial-gradient(2px 2px at 40px 70px, #fff, transparent),
+                radial-gradient(1px 1px at 90px 40px, #ddd, transparent),
+                radial-gradient(1px 1px at 130px 80px, #fff, transparent),
+                radial-gradient(2px 2px at 160px 30px, #eee, transparent),
+                radial-gradient(1px 1px at 200px 70px, #fff, transparent),
+                radial-gradient(1px 1px at 240px 40px, #ddd, transparent),
+                radial-gradient(2px 2px at 280px 80px, #fff, transparent),
+                radial-gradient(1px 1px at 320px 30px, #eee, transparent),
+                radial-gradient(2px 2px at 360px 70px, #fff, transparent),
+                radial-gradient(1px 1px at 400px 40px, #ddd, transparent),
+                radial-gradient(2px 2px at 440px 80px, #fff, transparent);
+            background-repeat: repeat;
+            background-size: 500px 500px;
+            animation: stars 120s linear infinite;
+        }
+
+        @keyframes stars {
+            from { transform: translateX(0); }
+            to { transform: translateX(-500px); }
+        }
+
+        /* Semi-dark theme - Floating particles */
+        .semi-dark-theme-bg {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        }
+
+        .semi-dark-theme-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(3px 3px at 50px 50px, rgba(255,255,255,0.3), transparent),
+                radial-gradient(2px 2px at 150px 150px, rgba(255,255,255,0.2), transparent),
+                radial-gradient(4px 4px at 250px 250px, rgba(255,255,255,0.25), transparent),
+                radial-gradient(3px 3px at 350px 350px, rgba(255,255,255,0.3), transparent);
+            animation: floatParticles 30s infinite linear;
+        }
+
+        @keyframes floatParticles {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+
+        /* Colorful theme - Floating shapes */
+        .colorful-theme-bg {
+            background: linear-gradient(135deg, #783a3a67 0%, #795307 100%);
+        }
+
+        .colorful-theme-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(30px 30px at 10% 10%, rgba(255,255,255,0.2), transparent),
+                radial-gradient(40px 40px at 90% 20%, rgba(255,255,255,0.15), transparent),
+                radial-gradient(50px 50px at 20% 80%, rgba(255,255,255,0.1), transparent),
+                radial-gradient(60px 60px at 80% 90%, rgba(255,255,255,0.25), transparent);
+            animation: floatingShapes 40s infinite linear;
+        }
+
+        @keyframes floatingShapes {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -20px) rotate(120deg); }
+            66% { transform: translate(-20px, 15px) rotate(240deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+
+        /* Ocean theme - Waves */
+        .ocean-theme-bg {
+            background: linear-gradient(135deg, #002451 0%, #091539 100%);
+        }
+
+        .ocean-theme-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
+            background-size: 200% 100%;
+            animation: waves 15s infinite linear;
+        }
+
+        @keyframes waves {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* Background Illustrations */
+        .bg-illustration {
+            position: fixed;
+            z-index: -1;
+            opacity: 0.1;
+            pointer-events: none;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .illustration-1 {
+            top: 5%;
+            left: 5%;
+            font-size: 8rem;
+            color: var(--primary);
+            animation-delay: 0s;
+        }
+
+        .illustration-2 {
+            top: 15%;
+            right: 10%;
+            font-size: 6rem;
+            color: var(--accent);
+            animation-delay: 1s;
+        }
+
+        .illustration-3 {
+            bottom: 10%;
+            left: 10%;
+            font-size: 7rem;
+            color: var(--success);
+            animation-delay: 2s;
+        }
+
+        .illustration-4 {
+            bottom: 20%;
+            right: 5%;
+            font-size: 5rem;
+            color: var(--warning);
+            animation-delay: 3s;
+        }
+
+        .pattern-dots {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(var(--primary) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: -1;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .doodle {
+            position: fixed;
+            z-index: -1;
+            opacity: 0.1;
+            pointer-events: none;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .doodle-1 {
+            top: 30%;
+            left: 8%;
+            font-size: 5rem;
+            transform: rotate(15deg);
+            color: var(--accent);
+            animation-delay: 0.5s;
+        }
+
+        .doodle-2 {
+            top: 60%;
+            right: 12%;
+            font-size: 4rem;
+            transform: rotate(-10deg);
+            color: var(--warning);
+            animation-delay: 1.5s;
+        }
+
+        .doodle-3 {
+            top: 40%;
+            right: 5%;
+            font-size: 6rem;
+            transform: rotate(25deg);
+            color: var(--success);
+            animation-delay: 2.5s;
+        }
+
+        .floating-shapes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--primary);
+            opacity: 0.05;
+            animation: float 15s infinite linear;
+        }
+
+        .shape-1 {
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 5s;
+        }
+
+        .shape-3 {
+            width: 100px;
+            height: 100px;
+            bottom: 20%;
+            left: 15%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(67, 97, 238, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(67, 97, 238, 0.8); }
         }
 
         .container {
@@ -121,12 +413,31 @@
             padding: 20px 0;
             margin-bottom: 30px;
             border-bottom: 1px solid var(--border);
+            animation: slideIn 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        header:hover::before {
+            left: 100%;
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 15px;
+            position: relative;
         }
 
         .logo-icon {
@@ -136,6 +447,8 @@
             background: var(--primary-light);
             padding: 10px;
             border-radius: 12px;
+            animation: pulse 2s infinite;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .logo-text {
@@ -145,12 +458,25 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            position: relative;
         }
 
-        .creator {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            margin-top: 5px;
+        .logo-text::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover .logo-text::after {
+            transform: scaleX(1);
+            transform-origin: left;
         }
 
         /* Welcome Screen */
@@ -171,18 +497,32 @@
 
         .welcome-content {
             text-align: center;
-            max-width: 600px;
+            max-width: 800px;
             padding: 40px;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             transform: perspective(1000px) rotateX(5deg);
             animation: float 6s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
         }
 
-        @keyframes float {
-            0%, 100% { transform: perspective(1000px) rotateX(5deg) translateY(0); }
-            50% { transform: perspective(1000px) rotateX(5deg) translateY(-10px); }
+        .welcome-content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
         }
 
         .welcome-title {
@@ -192,12 +532,63 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            animation: slideIn 1s ease-out;
         }
 
         .welcome-subtitle {
             font-size: 1.2rem;
             margin-bottom: 30px;
             color: var(--text);
+            animation: slideIn 1.2s ease-out;
+        }
+
+        .slideshow-container {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            margin-bottom: 30px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 10px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .slide.active {
+            opacity: 0.5;
+        }
+
+        .slide-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .slide-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .slide-content {
+            color: var(--text-light);
+            text-align: center;
+            max-width: 80%;
         }
 
         .name-input {
@@ -211,12 +602,14 @@
             font-size: 1.1rem;
             text-align: center;
             transition: all 0.3s ease;
+            animation: slideIn 1.4s ease-out;
         }
 
         .name-input:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            animation: glow 2s infinite;
         }
 
         .start-btn {
@@ -230,6 +623,24 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+            animation: slideIn 1.6s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .start-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .start-btn:hover::before {
+            left: 100%;
         }
 
         .start-btn:hover {
@@ -246,6 +657,7 @@
             font-size: 1.5rem;
             margin-bottom: 20px;
             color: var(--primary);
+            animation: slideIn 0.8s ease-out;
         }
 
         /* Dashboard */
@@ -263,6 +675,19 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             border: 1px solid var(--border);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
         }
 
         .card:hover {
@@ -322,6 +747,7 @@
             gap: 5px;
         }
 
+        /* Updated Calendar Day Styles for Compact View */
         .calendar-day {
             aspect-ratio: 1;
             display: flex;
@@ -329,10 +755,12 @@
             align-items: center;
             justify-content: center;
             background: var(--light);
-            border-radius: 10px;
+            border-radius: 5px;
             position: relative;
             transition: all 0.3s ease;
             border: 1px solid var(--border);
+            font-size: 0.8rem;
+            padding: 2px;
         }
 
         .calendar-day:hover {
@@ -351,19 +779,19 @@
         }
 
         .day-number {
-            font-size: 1.2rem;
+            font-size: 0.9rem;
             font-weight: 600;
         }
 
         .revision-dots {
             display: flex;
-            gap: 3px;
-            margin-top: 5px;
+            gap: 2px;
+            margin-top: 2px;
         }
 
         .revision-dot {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
         }
 
@@ -373,8 +801,9 @@
         .dot-gk { background: #7209b7; }
         .dot-computer { background: #3a0ca3; }
         .dot-banking { background: #38b000; }
+        .dot-custom { background: #6c757d; }
 
-        /* Add Topic Section */
+        /* Add Topic Section - New Design */
         .add-topic-section {
             margin-bottom: 30px;
         }
@@ -396,19 +825,33 @@
             color: var(--primary);
         }
 
-        .form-select, .form-input {
-            padding: 12px;
+        /* New Input Design */
+        .input-container {
+            display: flex;
             background: var(--light);
-            border: 1px solid var(--border);
-            border-radius: 10px;
+            border-radius: 1rem;
+            box-shadow: 4px 4px 8px rgba(0,0,0,0.1), -4px -4px 10px rgba(255,255,255,0.5);
+            padding: 0.3rem;
+            gap: 0.3rem;
+        }
+
+        .form-select, .form-input {
+            border-radius: 0.8rem 0 0 0.8rem;
+            background: var(--light);
+            box-shadow: inset 5px 5px 10px rgba(0,0,0,0.05), inset -5px -5px 10px rgba(255,255,255,0.5);
+            width: 100%;
+            flex-basis: 75%;
+            padding: 1rem;
+            border: none;
+            border: 1px solid transparent;
             color: var(--text);
-            font-size: 1rem;
+            transition: all 0.2s ease-in-out;
         }
 
         .form-select:focus, .form-input:focus {
+            border: 1px solid var(--primary);
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            box-shadow: inset 0px 0px 10px rgba(67, 97, 238, 0.2), 0px 0px 10px rgba(67, 97, 238, 0.2);
         }
 
         .add-btn {
@@ -422,6 +865,23 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .add-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .add-btn:hover::before {
+            left: 100%;
         }
 
         .add-btn:hover {
@@ -533,6 +993,24 @@
             color: var(--text-light);
         }
 
+        .todo-item.past-due {
+            border-left: 4px solid var(--warning);
+        }
+
+        .todo-item.future {
+            opacity: 0.7;
+        }
+
+        .todo-item.future .todo-checkbox {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        /* Backlog Section */
+        .backlog-section {
+            margin-top: 40px;
+        }
+
         /* Drawer */
         .drawer {
             position: fixed;
@@ -547,6 +1025,7 @@
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
             border-left: 1px solid var(--border);
             overflow-y: auto;
+            overflow-x: hidden;
         }
 
         .drawer.open {
@@ -560,6 +1039,7 @@
             margin-bottom: 30px;
             padding-bottom: 15px;
             border-bottom: 1px solid var(--border);
+            position: relative;
         }
 
         .drawer-title {
@@ -574,6 +1054,11 @@
             color: var(--primary);
             font-size: 1.5rem;
             cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .close-drawer:hover {
+            transform: rotate(90deg);
         }
 
         .drawer-menu {
@@ -595,6 +1080,23 @@
             padding: 10px;
             border-radius: 10px;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .drawer-menu a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--primary-light), transparent);
+            transition: left 0.5s;
+        }
+
+        .drawer-menu a:hover::before {
+            left: 100%;
         }
 
         .drawer-menu a:hover {
@@ -648,22 +1150,22 @@
         }
 
         .theme-light {
-            background: linear-gradient(135deg, #f0f4ff 0%, #f8fafc 100%);
+            background: linear-gradient(135deg, #f0f4ff 0%, #a4fdc0 100%);
             color: #334155;
         }
 
         .theme-dark {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: #e2e8f0;
+            background: linear-gradient(135deg, #090d18 0%, #685321 100%);
+            color: #ffffff;
         }
 
         .theme-semi-dark {
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            background: linear-gradient(135deg, #1e293b 0%, #335b94 100%);
             color: #e2e8f0;
         }
 
         .theme-colorful {
-            background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+            background: linear-gradient(135deg, #ff6b6b 0%, #d99c22 100%);
             color: #334155;
         }
 
@@ -680,27 +1182,150 @@
             text-decoration: none;
             font-weight: 600;
             margin-top: 10px;
-        }
-
-        /* Menu Button */
-        .menu-btn {
-            background: var(--light);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            width: 50px;
-            height: 50px;
-            color: var(--primary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             transition: all 0.3s ease;
         }
 
+        .contact-link:hover {
+            transform: translateX(5px);
+        }
+
+        /* Drawer Doodles */
+        .drawer-doodle {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: -1;
+            animation: float 10s infinite ease-in-out;
+        }
+
+        .drawer-doodle-1 {
+            top: 10%;
+            right: 10%;
+            color: var(--primary);
+            animation-delay: 0s;
+        }
+
+        .drawer-doodle-2 {
+            bottom: 20%;
+            left: 10%;
+            color: var(--accent);
+            animation-delay: 2s;
+        }
+
+        .drawer-doodle-3 {
+            bottom: 10%;
+            right: 20%;
+            color: var(--success);
+            animation-delay: 4s;
+        }
+
+        /* Menu Button - Shine Button Style */
+        .menu-btn {
+            position: relative;
+            margin: 0;
+            padding: 12px 20px;
+            outline: none;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            text-transform: uppercase;
+            background-color: var(--light);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--primary);
+            font-weight: 400;
+            font-family: inherit;
+            z-index: 0;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
+        }
+
+        .menu-btn span {
+            color: var(--primary);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.7px;
+        }
+
         .menu-btn:hover {
-            background: var(--primary);
-            color: white;
+            animation: rotate624 0.7s ease-in-out both;
+        }
+
+        .menu-btn:hover span {
+            animation: storm1261 0.7s ease-in-out both;
+            animation-delay: 0.06s;
+        }
+
+        @keyframes rotate624 {
+            0% {
+                transform: rotate(0deg) translate3d(0, 0, 0);
+            }
+
+            25% {
+                transform: rotate(3deg) translate3d(0, 0, 0);
+            }
+
+            50% {
+                transform: rotate(-3deg) translate3d(0, 0, 0);
+            }
+
+            75% {
+                transform: rotate(1deg) translate3d(0, 0, 0);
+            }
+
+            100% {
+                transform: rotate(0deg) translate3d(0, 0, 0);
+            }
+        }
+
+        @keyframes storm1261 {
+            0% {
+                transform: translate3d(0, 0, 0) translateZ(0);
+            }
+
+            25% {
+                transform: translate3d(4px, 0, 0) translateZ(0);
+            }
+
+            50% {
+                transform: translate3d(-3px, 0, 0) translateZ(0);
+            }
+
+            75% {
+                transform: translate3d(2px, 0, 0) translateZ(0);
+            }
+
+            100% {
+                transform: translate3d(0, 0, 0) translateZ(0);
+            }
+        }
+
+        .btn-shine {
+            border: 1px solid;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .btn-shine:after {
+            background: var(--accent);
+            content: "";
+            height: 155px;
+            left: -75px;
+            opacity: 0.4;
+            position: absolute;
+            top: -50px;
+            transform: rotate(35deg);
+            transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
+            width: 50px;
+            z-index: -10;
+        }
+
+        .btn-shine:hover:after {
+            left: 120%;
+            transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         /* Notification Modal */
@@ -890,6 +1515,244 @@
             color: var(--text-light);
         }
 
+        /* Custom Subject Input */
+        .custom-subject-input {
+            margin-top: 10px;
+        }
+
+        /* Progress Modal */
+        .progress-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .progress-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .progress-content {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .progress-modal.active .progress-content {
+            transform: translateY(0);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .progress-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .close-progress {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Flashcards - New Design */
+        .flashcards-container {
+            margin-top: 20px;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            width: 100%;
+            height: 300px;
+            perspective: 1000px;
+            font-family: sans-serif;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-size: 1.5em;
+            font-weight: 900;
+            text-align: center;
+            margin: 0;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            box-shadow: 0 8px 14px 0 rgba(0,0,0,0.2);
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border: 1px solid var(--primary);
+            border-radius: 1rem;
+            padding: 20px;
+        }
+
+        .flip-card-front {
+            background: linear-gradient(120deg, var(--primary-light) 60%, var(--light) 88%,
+               var(--accent) 40%, rgba(255, 127, 80, 0.603) 48%);
+            color: var(--primary);
+        }
+
+        .flip-card-back {
+            background: linear-gradient(120deg, var(--accent) 30%, var(--primary) 88%,
+               var(--primary-light) 40%, var(--light) 78%);
+            color: white;
+            transform: rotateY(180deg);
+            overflow-y: auto;
+        }
+
+        .flashcard-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .flashcard-btn {
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .flashcard-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .flashcard-btn:disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .flashcard-counter {
+            text-align: center;
+            margin-top: 10px;
+            color: var(--text-light);
+        }
+
+        /* Congratulations Animation */
+        .congratulations {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .congratulations.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .congratulations-content {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: scale(0.8);
+            transition: transform 0.5s ease;
+        }
+
+        .congratulations.active .congratulations-content {
+            transform: scale(1);
+        }
+
+        .congratulations-icon {
+            font-size: 4rem;
+            color: var(--success);
+            margin-bottom: 20px;
+            animation: bounce 1s infinite alternate;
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+
+        .congratulations-title {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .congratulations-message {
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        /* 3D Elements */
+        .three-d-card {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: transform 0.5s;
+        }
+
+        .three-d-card:hover {
+            transform: rotateY(10deg) rotateX(5deg);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .dashboard {
@@ -912,18 +1775,111 @@
             .share-options {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .progress-content {
+                padding: 20px;
+            }
+
+            .welcome-title {
+                font-size: 2.2rem;
+            }
+
+            .slideshow-container {
+                height: 250px;
+            }
+
+            .input-container {
+                flex-direction: column;
+            }
+
+            .form-select, .form-input {
+                border-radius: 0.8rem;
+            }
+
+            .add-btn {
+                padding: 1rem;
+                border-radius: 0.8rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Theme Background -->
+    <div class="theme-background light-theme-bg" id="themeBackground"></div>
+
+    <!-- Background Illustrations -->
+    <div class="bg-illustration illustration-1">
+        <i class="fas fa-brain"></i>
+    </div>
+    <div class="bg-illustration illustration-2">
+        <i class="fas fa-book-open"></i>
+    </div>
+    <div class="bg-illustration illustration-3">
+        <i class="fas fa-graduation-cap"></i>
+    </div>
+    <div class="bg-illustration illustration-4">
+        <i class="fas fa-lightbulb"></i>
+    </div>
+    <div class="pattern-dots"></div>
+    
+    <!-- Doodles -->
+    <div class="doodle doodle-1">
+        <i class="fas fa-star"></i>
+    </div>
+    <div class="doodle doodle-2">
+        <i class="fas fa-rocket"></i>
+    </div>
+    <div class="doodle doodle-3">
+        <i class="fas fa-bolt"></i>
+    </div>
+
+    <!-- Floating Shapes -->
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
     <!-- Welcome Screen -->
     <div class="welcome-screen" id="welcomeScreen">
         <div class="welcome-content">
             <h1 class="welcome-title">RATTAFICATION</h1>
             <p class="welcome-subtitle">Master RRB/SSC/Banking exams with scientific revision scheduling</p>
+            
+            <!-- Slideshow -->
+            <div class="slideshow-container">
+                <div class="slide active">
+                    <div class="slide-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="slide-title">Active Recall</div>
+                    <div class="slide-content">Strengthen memory pathways by testing yourself instead of just re-reading</div>
+                </div>
+                <div class="slide">
+                    <div class="slide-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="slide-title">Spaced Repetition</div>
+                    <div class="slide-content">Automated scheduling based on scientifically proven intervals</div>
+                </div>
+                <div class="slide">
+                    <div class="slide-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="slide-title">Progress Tracking</div>
+                    <div class="slide-content">Monitor your learning journey with detailed analytics</div>
+                </div>
+                <div class="slide">
+                    <div class="slide-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="slide-title">Exam Success</div>
+                    <div class="slide-content">Optimized for RRB, SSC, Banking and other competitive exams</div>
+                </div>
+            </div>
+            
             <input type="text" class="name-input" id="userName" placeholder="Enter your name">
             <button class="start-btn" id="startBtn">Start Exam Preparation</button>
-            <p class="creator">App made by Mr. Shailendra</p>
         </div>
     </div>
 
@@ -938,11 +1894,10 @@
                     </div>
                     <div>
                         <div class="logo-text">RATTAFICATION</div>
-                        <div class="creator">App made by Mr. Shailendra</div>
                     </div>
                 </div>
-                <button class="menu-btn" id="menuBtn">
-                    <i class="fas fa-bars"></i>
+                <button class="menu-btn btn-shine" id="menuBtn">
+                    <span>Menu</span>
                 </button>
             </header>
 
@@ -954,7 +1909,7 @@
             <!-- Dashboard -->
             <div class="dashboard">
                 <!-- Today's Revisions -->
-                <div class="card">
+                <div class="card three-d-card">
                     <div class="card-title">
                         <i class="fas fa-tasks"></i>
                         Today's Revisions
@@ -965,7 +1920,7 @@
                 </div>
 
                 <!-- Progress Overview -->
-                <div class="card">
+                <div class="card three-d-card">
                     <div class="card-title">
                         <i class="fas fa-chart-line"></i>
                         Progress Overview
@@ -978,7 +1933,7 @@
 
             <!-- Revision Calendar -->
             <div class="calendar-container">
-                <div class="card">
+                <div class="card three-d-card">
                     <div class="card-title">
                         <i class="fas fa-calendar-alt"></i>
                         Revision Calendar
@@ -998,7 +1953,7 @@
 
             <!-- Add Topic Section -->
             <div class="add-topic-section">
-                <div class="card">
+                <div class="card three-d-card">
                     <div class="card-title">
                         <i class="fas fa-plus-circle"></i>
                         Add Topic for Revision
@@ -1006,31 +1961,43 @@
                     <div class="topic-form">
                         <div class="form-group">
                             <label class="form-label">Subject</label>
-                            <select class="form-select" id="subjectSelect">
-                                <option value="">Select a subject</option>
-                                <option value="math">Quantitative Aptitude</option>
-                                <option value="reasoning">Reasoning Ability</option>
-                                <option value="english">English Language</option>
-                                <option value="gk">General Knowledge</option>
-                                <option value="computer">Computer Knowledge</option>
-                                <option value="banking">Banking Awareness</option>
-                            </select>
+                            <div class="input-container">
+                                <select class="form-select" id="subjectSelect">
+                                    <option value="">Select a subject</option>
+                                    <option value="math">Quantitative Aptitude</option>
+                                    <option value="reasoning">Reasoning Ability</option>
+                                    <option value="english">English Language</option>
+                                    <option value="gk">General Knowledge</option>
+                                    <option value="computer">Computer Knowledge</option>
+                                    <option value="banking">Banking Awareness</option>
+                                    <option value="custom">Custom Subject</option>
+                                </select>
+                            </div>
+                            <div class="custom-subject-input" id="customSubjectGroup" style="display: none;">
+                                <div class="input-container">
+                                    <input type="text" class="form-input" id="customSubject" placeholder="Enter custom subject name">
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group" id="chapterGroup">
                             <label class="form-label">Chapter/Topic</label>
-                            <select class="form-select" id="chapterSelect">
-                                <option value="">Select a chapter</option>
-                            </select>
+                            <div class="input-container">
+                                <select class="form-select" id="chapterSelect">
+                                    <option value="">Select a chapter</option>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="form-group" id="customTopicGroup" style="display: none;">
                             <label class="form-label">Custom Topic</label>
-                            <input type="text" class="form-input" id="customTopic" placeholder="Enter topic name">
+                            <div class="input-container">
+                                <input type="text" class="form-input" id="customTopic" placeholder="Enter topic name">
+                            </div>
                         </div>
 
-                        <button class="add-btn" id="addTopicBtn">
-                            <i class="fas fa-plus"></i> Add to Revision Schedule
+                        <button class="add-btn btn-shine" id="addTopicBtn">
+                            <span>Add to Revision Schedule</span>
                         </button>
                     </div>
                 </div>
@@ -1038,7 +2005,7 @@
 
             <!-- To-Do List -->
             <div class="todo-section">
-                <div class="card">
+                <div class="card three-d-card">
                     <div class="card-title">
                         <i class="fas fa-list-check"></i>
                         Revision To-Do List
@@ -1049,9 +2016,22 @@
                 </div>
             </div>
 
+            <!-- Backlog Section -->
+            <div class="backlog-section">
+                <div class="card three-d-card">
+                    <div class="card-title">
+                        <i class="fas fa-history"></i>
+                        Backlog - Missed Revisions
+                    </div>
+                    <div id="backlogList">
+                        <p>No missed revisions. Great job!</p>
+                    </div>
+                </div>
+            </div>
+
             <!-- Progress Timeline -->
             <div class="todo-section">
-                <div class="card">
+                <div class="card three-d-card">
                     <div class="card-title">
                         <i class="fas fa-chart-bar"></i>
                         Revision Progress Timeline
@@ -1062,43 +2042,35 @@
                 </div>
             </div>
 
-            <!-- Tips Section -->
+            <!-- Flashcards Section -->
             <div class="tips-section">
-                <div class="card">
+                <div class="card three-d-card">
                     <div class="card-title">
                         <i class="fas fa-lightbulb"></i>
-                        Exam Preparation Tips
+                        Exam Preparation Tips (Flashcards)
                     </div>
-                    <div class="tips-grid">
-                        <div class="tip-card">
-                            <div class="tip-icon">
-                                <i class="fas fa-brain"></i>
-                            </div>
-                            <div class="tip-title">Active Recall</div>
-                            <div class="tip-content">
-                                Test yourself regularly instead of just re-reading. This strengthens memory pathways and improves retention.
-                            </div>
-                        </div>
-
-                        <div class="tip-card">
-                            <div class="tip-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div class="tip-title">Spaced Repetition</div>
-                            <div class="tip-content">
-                                Review material at increasing intervals to combat the forgetting curve. This app automates this process for you.
+                    <div class="flashcards-container">
+                        <div class="flip-card" id="flashcard">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <p class="title" id="flashcardTitle">Active Recall</p>
+                                    <p>Click to flip the card</p>
+                                </div>
+                                <div class="flip-card-back">
+                                    <p class="title">Active Recall</p>
+                                    <p id="flashcardContent">Regularly test yourself instead of just re-reading. This strengthens memory pathways and improves retention.</p>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="tip-card">
-                            <div class="tip-icon">
-                                <i class="fas fa-book"></i>
-                            </div>
-                            <div class="tip-title">Interleaving</div>
-                            <div class="tip-content">
-                                Mix different subjects or topics during study sessions for better retention and understanding.
-                            </div>
+                        <div class="flashcard-nav">
+                            <button class="flashcard-btn btn-shine" id="prevFlashcard">
+                                <span>Previous</span>
+                            </button>
+                            <button class="flashcard-btn btn-shine" id="nextFlashcard">
+                                <span>Next</span>
+                            </button>
                         </div>
+                        <div class="flashcard-counter" id="flashcardCounter">1/15</div>
                     </div>
                 </div>
             </div>
@@ -1112,6 +2084,17 @@
 
     <!-- Drawer -->
     <div class="drawer" id="drawer">
+        <!-- Drawer Doodles -->
+        <div class="drawer-doodle drawer-doodle-1">
+            <i class="fas fa-book"></i>
+        </div>
+        <div class="drawer-doodle drawer-doodle-2">
+            <i class="fas fa-pen"></i>
+        </div>
+        <div class="drawer-doodle drawer-doodle-3">
+            <i class="fas fa-graduation-cap"></i>
+        </div>
+        
         <div class="drawer-header">
             <div class="drawer-title">Menu</div>
             <button class="close-drawer" id="closeDrawer">
@@ -1120,7 +2103,7 @@
         </div>
         <ul class="drawer-menu">
             <li><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
-            <li><a href="#"><i class="fas fa-chart-bar"></i> Progress</a></li>
+            <li><a href="#" id="progressLink"><i class="fas fa-chart-bar"></i> Progress</a></li>
             <li><a href="#" id="themeLink"><i class="fas fa-palette"></i> Theme Settings</a></li>
             <li><a href="#" id="shareAppLink"><i class="fas fa-share-alt"></i> Share App</a></li>
             <li><a href="#" id="aboutLink"><i class="fas fa-info-circle"></i> About</a></li>
@@ -1153,17 +2136,16 @@
             <div class="drawer-section-content">
                 <p>RATTAFICATION is a scientifically designed exam preparation app that helps students master competitive exams like RRB, SSC, and Banking through optimized revision scheduling.</p>
                 <p>Using principles of spaced repetition and active recall, the app schedules revisions at scientifically proven intervals to maximize retention and minimize forgetting.</p>
-                <p>This app is created by Mr. Shailendra to help students prepare more effectively for competitive exams.</p>
             </div>
         </div>
 
         <div class="drawer-section" id="doubtsSection" style="display: none;">
             <div class="drawer-section-title">Any Doubts?</div>
             <div class="drawer-section-content">
-                <p>If you have any questions or need help with the app, feel free to contact the owner:</p>
+                <p>If you have any questions or need help with the app, feel free to contact us:</p>
                 <a href="https://t.me/shailuk7" class="contact-link" target="_blank">
                     <i class="fas fa-envelope"></i>
-                    Contact with Owner
+                    Contact with Support
                 </a>
             </div>
         </div>
@@ -1223,6 +2205,44 @@
         </div>
     </div>
 
+    <!-- Progress Modal -->
+    <div class="progress-modal" id="progressModal">
+        <div class="progress-content">
+            <div class="progress-header">
+                <div class="progress-title">Detailed Progress Report</div>
+                <button class="close-progress" id="closeProgress">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="progress-container">
+                <canvas id="detailedProgressChart"></canvas>
+            </div>
+            <div class="card" style="margin-top: 20px;">
+                <div class="card-title">
+                    <i class="fas fa-list"></i>
+                    Topic Completion History (Last 30 Days)
+                </div>
+                <div id="progressHistory">
+                    <!-- Progress history will be generated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Congratulations Animation -->
+    <div class="congratulations" id="congratulations">
+        <div class="congratulations-content">
+            <div class="congratulations-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <div class="congratulations-title">Congratulations!</div>
+            <div class="congratulations-message" id="congratulationsMessage">
+                Great job completing your revision! Keep up the good work.
+            </div>
+            <button class="notification-btn primary" id="closeCongratulations">Continue</button>
+        </div>
+    </div>
+
     <script>
         // DOM Elements
         const welcomeScreen = document.getElementById('welcomeScreen');
@@ -1238,6 +2258,8 @@
         const chapterSelect = document.getElementById('chapterSelect');
         const customTopicGroup = document.getElementById('customTopicGroup');
         const chapterGroup = document.getElementById('chapterGroup');
+        const customSubjectGroup = document.getElementById('customSubjectGroup');
+        const customSubjectInput = document.getElementById('customSubject');
         const addTopicBtn = document.getElementById('addTopicBtn');
         const calendar = document.getElementById('calendar');
         const currentMonth = document.getElementById('currentMonth');
@@ -1245,9 +2267,11 @@
         const nextMonthBtn = document.getElementById('nextMonth');
         const todayRevisions = document.getElementById('todayRevisions');
         const todoList = document.getElementById('todoList');
+        const backlogList = document.getElementById('backlogList');
         const aboutLink = document.getElementById('aboutLink');
         const doubtsLink = document.getElementById('doubtsLink');
         const themeLink = document.getElementById('themeLink');
+        const progressLink = document.getElementById('progressLink');
         const aboutSection = document.getElementById('aboutSection');
         const doubtsSection = document.getElementById('doubtsSection');
         const themeSection = document.getElementById('themeSection');
@@ -1260,7 +2284,22 @@
         const shareInput = document.getElementById('shareInput');
         const copyLinkBtn = document.getElementById('copyLinkBtn');
         const closeShareModal = document.getElementById('closeShareModal');
+        const progressModal = document.getElementById('progressModal');
+        const closeProgress = document.getElementById('closeProgress');
+        const detailedProgressChart = document.getElementById('detailedProgressChart');
+        const progressHistory = document.getElementById('progressHistory');
+        const flashcard = document.getElementById('flashcard');
+        const flashcardTitle = document.getElementById('flashcardTitle');
+        const flashcardContent = document.getElementById('flashcardContent');
+        const prevFlashcard = document.getElementById('prevFlashcard');
+        const nextFlashcard = document.getElementById('nextFlashcard');
+        const flashcardCounter = document.getElementById('flashcardCounter');
+        const congratulations = document.getElementById('congratulations');
+        const congratulationsMessage = document.getElementById('congratulationsMessage');
+        const closeCongratulations = document.getElementById('closeCongratulations');
         const themeOptions = document.querySelectorAll('.theme-option');
+        const slides = document.querySelectorAll('.slide');
+        const themeBackground = document.getElementById('themeBackground');
 
         // App State
         let currentUser = '';
@@ -1268,6 +2307,8 @@
         let topics = JSON.parse(localStorage.getItem('topics')) || [];
         let notificationShownToday = localStorage.getItem('notificationShownToday') || false;
         let currentTheme = localStorage.getItem('currentTheme') || 'light';
+        let currentFlashcardIndex = 0;
+        let currentSlideIndex = 0;
 
         // Subject data for RRB/SSC/Banking exams
         const subjects = {
@@ -1341,13 +2382,90 @@
                     'Negotiable Instruments', 'Payment Systems', 'Financial Institutions', 'Monetary Policy',
                     'Non-Performing Assets', 'KYC Guidelines', 'Banking Ombudsman', 'Recent Banking Reforms', 'Custom Topic'
                 ]
+            },
+            custom: {
+                name: 'Custom Subject',
+                icon: 'fas fa-edit',
+                color: '#6c757d',
+                chapters: ['Custom Topic']
             }
         };
+
+        // Flashcards data
+        const flashcards = [
+            {
+                title: "Active Recall",
+                content: "Regularly test yourself instead of just re-reading. This strengthens memory pathways and improves retention. अपने आप को नियमित रूप से जांचें, सिर्फ पढ़ने के बजाय। यह स्मृति मार्गों को मजबूत करता है और प्रतिधारण में सुधार करता है।"
+            },
+            {
+                title: "Spaced Repetition",
+                content: "Review material at increasing intervals to combat the forgetting curve. This app automates this process for you. भूलने की प्रवृत्ति से लड़ने के लिए बढ़ते अंतराल पर सामग्री की समीक्षा करें। यह ऐप इस प्रक्रिया को आपके लिए स्वचालित करता है।"
+            },
+            {
+                title: "Interleaving",
+                content: "Mix different subjects or topics during study sessions for better retention and understanding. बेहतर प्रतिधारण और समझ के लिए अध्ययन सत्रों के दौरान विभिन्न विषयों या विषयों को मिलाएं।"
+            },
+            {
+                title: "Pomodoro Technique",
+                content: "Study in focused 25-minute intervals with 5-minute breaks. This improves concentration and prevents burnout. 5 मिनट के ब्रेक के साथ 25 मिनट के फोकस्ड अंतराल में अध्ययन करें। यह एकाग्रता में सुधार करता है और बर्नआउट को रोकता है।"
+            },
+            {
+                title: "Mind Mapping",
+                content: "Create visual diagrams to organize information. This helps in understanding complex topics and improves memory. जानकारी को व्यवस्थित करने के लिए दृश्य आरेख बनाएं। यह जटिल विषयों को समझने में मदद करता है और स्मृति में सुधार करता है।"
+            },
+            {
+                title: "Meditation for Focus",
+                content: "Practice 10 minutes of meditation daily to improve focus and reduce stress. एकाग्रता बढ़ाने और तनाव कम करने के लिए दैनिक 10 मिनट का ध्यान अभ्यास करें।"
+            },
+            {
+                title: "Fast Revision Techniques",
+                content: "Use mnemonics, acronyms, and visualization for quick revision before exams. परीक्षा से पहले त्वरित संशोधन के लिए मेमोनिक्स, संक्षिप्ताक्षर और विज़ुअलाइज़ेशन का उपयोग करें।"
+            },
+            {
+                title: "Long Term Memory",
+                content: "Connect new information to what you already know. This creates stronger neural connections and improves long-term retention. नई जानकारी को उससे जोड़ें जो आप पहले से जानते हैं। यह मजबूत तंत्रिका कनेक्शन बनाता है और दीर्घकालिक प्रतिधारण में सुधार करता है।"
+            },
+            {
+                title: "Effective Note Taking",
+                content: "Use the Cornell method for note-taking: divide page into cues, notes, and summary sections for better organization. बेहतर संगठन के लिए नोट लेने के लिए कॉर्नेल विधि का उपयोग करें: पृष्ठ को संकेत, नोट्स और सारांश अनुभागों में विभाजित करें।"
+            },
+            {
+                title: "Study Environment",
+                content: "Create a dedicated study space with good lighting, minimal distractions, and all necessary materials. अच्छी रोशनी, न्यूनतम विकर्षण और सभी आवश्यक सामग्रियों के साथ एक समर्पित अध्ययन स्थान बनाएं।"
+            },
+            {
+                title: "Healthy Study Habits",
+                content: "Get adequate sleep, exercise regularly, and maintain a balanced diet for optimal brain function. इष्टतम मस्तिष्क कार्य के लिए पर्याप्त नींद लें, नियमित रूप से व्यायाम करें और संतुलित आहार बनाए रखें।"
+            },
+            {
+                title: "Time Management",
+                content: "Prioritize tasks using the Eisenhower Matrix: urgent/important, important/not urgent, urgent/not important, not urgent/not important. आइजनहावर मैट्रिक्स का उपयोग करके कार्यों को प्राथमिकता दें: जरूरी/महत्वपूर्ण, महत्वपूर्ण/जरूरी नहीं, जरूरी/महत्वपूर्ण नहीं, जरूरी नहीं/महत्वपूर्ण नहीं।"
+            },
+            {
+                title: "Exam Strategy",
+                content: "Read all questions first, start with easier ones, manage time wisely, and review answers if time permits. पहले सभी प्रश्न पढ़ें, आसान वाले से शुरू करें, समय का बुद्धिमानी से प्रबंधन करें और यदि समय मिले तो उत्तरों की समीक्षा करें।"
+            },
+            {
+                title: "Stress Management",
+                content: "Practice deep breathing, take short breaks, and maintain a positive mindset during study sessions. गहरी सांस लेने का अभ्यास करें, छोटे ब्रेक लें और अध्ययन सत्रों के दौरान सकारात्मक मानसिकता बनाए रखें।"
+            },
+            {
+                title: "Revision Schedule",
+                content: "Follow the 1-3-7-15-30 day revision pattern for optimal retention of information. जानकारी के इष्टतम प्रतिधारण के लिए 1-3-7-15-30 दिन के संशोधन पैटर्न का पालन करें।"
+            }
+        ];
 
         // Initialize the app
         function initApp() {
             // Apply saved theme
             applyTheme(currentTheme);
+            
+            // Set active theme option
+            themeOptions.forEach(option => {
+                if (option.getAttribute('data-theme') === currentTheme) {
+                    option.classList.add('active');
+                }
+            });
             
             // Check if user already exists in localStorage
             const savedUser = localStorage.getItem('currentUser');
@@ -1356,22 +2474,32 @@
                 showApp();
             }
 
+            // Start slideshow
+            startSlideshow();
+
             // Set up event listeners
             startBtn.addEventListener('click', startApp);
             menuBtn.addEventListener('click', toggleDrawer);
             closeDrawer.addEventListener('click', toggleDrawer);
             subjectSelect.addEventListener('change', handleSubjectChange);
+            chapterSelect.addEventListener('change', handleChapterChange);
             addTopicBtn.addEventListener('click', addTopic);
             prevMonthBtn.addEventListener('click', showPreviousMonth);
             nextMonthBtn.addEventListener('click', showNextMonth);
             aboutLink.addEventListener('click', showAbout);
             doubtsLink.addEventListener('click', showDoubts);
             themeLink.addEventListener('click', showTheme);
+            progressLink.addEventListener('click', showProgressModal);
             shareAppLink.addEventListener('click', showShareModal);
             notificationLater.addEventListener('click', closeNotification);
             notificationGo.addEventListener('click', goToRevisions);
             copyLinkBtn.addEventListener('click', copyShareLink);
             closeShareModal.addEventListener('click', closeShareModalFunc);
+            closeProgress.addEventListener('click', closeProgressModal);
+            flashcard.addEventListener('click', flipFlashcard);
+            prevFlashcard.addEventListener('click', showPrevFlashcard);
+            nextFlashcard.addEventListener('click', showNextFlashcard);
+            closeCongratulations.addEventListener('click', closeCongratulationsFunc);
             
             // Theme options
             themeOptions.forEach(option => {
@@ -1410,15 +2538,78 @@
             
             // Render to-do list
             renderTodoList();
+            
+            // Render backlog
+            renderBacklog();
+
+            // Initialize flashcards
+            updateFlashcard();
 
             // Check if we should show notification
             checkForNotification();
+
+            // Schedule daily notification at 5 AM
+            scheduleDailyNotification();
+
+            // Check for auto-removal of completed revisions
+            checkAutoRemoval();
+        }
+
+        // Start slideshow
+        function startSlideshow() {
+            setInterval(() => {
+                slides[currentSlideIndex].classList.remove('active');
+                currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+                slides[currentSlideIndex].classList.add('active');
+            }, 4000);
         }
 
         // Apply theme
         function applyTheme(theme) {
             document.body.className = theme + '-theme';
             currentTheme = theme;
+            
+            // Update theme background
+            themeBackground.className = 'theme-background ' + theme + '-theme-bg';
+            
+            // Update chart colors based on theme
+            updateChartColors();
+        }
+
+        // Update chart colors based on theme
+        function updateChartColors() {
+            // Update progress chart
+            if (window.progressChartInstance) {
+                const textColor = getComputedStyle(document.documentElement).getPropertyValue('--text');
+                window.progressChartInstance.options.plugins.legend.labels.color = textColor;
+                window.progressChartInstance.update();
+            }
+            
+            // Update timeline chart
+            if (window.timelineChartInstance) {
+                const textColor = getComputedStyle(document.documentElement).getPropertyValue('--text');
+                const gridColor = getComputedStyle(document.documentElement).getPropertyValue('--border');
+                
+                window.timelineChartInstance.options.plugins.legend.labels.color = textColor;
+                window.timelineChartInstance.options.scales.x.grid.color = gridColor;
+                window.timelineChartInstance.options.scales.x.ticks.color = textColor;
+                window.timelineChartInstance.options.scales.y.grid.color = gridColor;
+                window.timelineChartInstance.options.scales.y.ticks.color = textColor;
+                window.timelineChartInstance.update();
+            }
+            
+            // Update detailed progress chart
+            if (window.detailedProgressChartInstance) {
+                const textColor = getComputedStyle(document.documentElement).getPropertyValue('--text');
+                const gridColor = getComputedStyle(document.documentElement).getPropertyValue('--border');
+                
+                window.detailedProgressChartInstance.options.plugins.legend.labels.color = textColor;
+                window.detailedProgressChartInstance.options.scales.x.grid.color = gridColor;
+                window.detailedProgressChartInstance.options.scales.x.ticks.color = textColor;
+                window.detailedProgressChartInstance.options.scales.y.grid.color = gridColor;
+                window.detailedProgressChartInstance.options.scales.y.ticks.color = textColor;
+                window.detailedProgressChartInstance.update();
+            }
         }
 
         // Start the app
@@ -1470,6 +2661,20 @@
             aboutSection.style.display = 'none';
             doubtsSection.style.display = 'none';
             themeSection.style.display = 'block';
+        }
+
+        // Show progress modal
+        function showProgressModal(e) {
+            e.preventDefault();
+            progressModal.classList.add('active');
+            initDetailedProgressChart();
+            renderProgressHistory();
+            toggleDrawer();
+        }
+
+        // Close progress modal
+        function closeProgressModal() {
+            progressModal.classList.remove('active');
         }
 
         // Show share modal
@@ -1533,31 +2738,73 @@
                     chapterSelect.appendChild(option);
                 });
             }
+            
+            // Show/hide custom subject input
+            if (selectedSubject === 'custom') {
+                customSubjectGroup.style.display = 'block';
+                chapterGroup.style.display = 'none';
+                customTopicGroup.style.display = 'block';
+            } else {
+                customSubjectGroup.style.display = 'none';
+                chapterGroup.style.display = 'block';
+                customTopicGroup.style.display = 'none';
+            }
+        }
+
+        // Handle chapter selection change
+        function handleChapterChange() {
+            const selectedChapter = chapterSelect.value;
+            
+            if (selectedChapter === 'Custom Topic') {
+                customTopicGroup.style.display = 'block';
+            } else {
+                customTopicGroup.style.display = 'none';
+            }
         }
 
         // Add topic to revision schedule
         function addTopic() {
             const subject = subjectSelect.value;
-            let topicName = chapterSelect.value;
+            let subjectName, topicName;
            
             if (!subject) {
                 alert('Please select a subject.');
                 return;
             }
             
-            if (!topicName) {
-                alert('Please select a chapter.');
-                return;
-            }
-            
-            // If custom topic is selected, show input
-            if (topicName === 'Custom Topic') {
-                const customTopic = prompt('Enter custom topic name:');
-                if (!customTopic) {
+            if (subject === 'custom') {
+                // Custom subject
+                subjectName = customSubjectInput.value.trim();
+                topicName = document.getElementById('customTopic').value.trim();
+                
+                if (!subjectName) {
+                    alert('Please enter a custom subject name.');
+                    return;
+                }
+                
+                if (!topicName) {
                     alert('Please enter a topic name.');
                     return;
                 }
-                topicName = customTopic;
+            } else {
+                // Predefined subject
+                subjectName = subjects[subject].name;
+                topicName = chapterSelect.value;
+                
+                if (!topicName) {
+                    alert('Please select a chapter.');
+                    return;
+                }
+                
+                // If custom topic is selected, show input
+                if (topicName === 'Custom Topic') {
+                    const customTopic = document.getElementById('customTopic').value.trim();
+                    if (!customTopic) {
+                        alert('Please enter a topic name.');
+                        return;
+                    }
+                    topicName = customTopic;
+                }
             }
 
             // Calculate revision dates (Day 1, 3, 7, 15, 30)
@@ -1573,10 +2820,12 @@
             const newTopic = {
                 id: Date.now(),
                 subject: subject,
+                subjectName: subjectName,
                 topicName: topicName,
                 addedDate: today,
                 revisionDates: revisionDates,
-                completedRevisions: [false, false, false, false, false] // All revisions start as incomplete
+                completedRevisions: [false, false, false, false, false], // All revisions start as incomplete
+                lastCompletionDate: null // Track when revisions were last completed
             };
            
             topics.push(newTopic);
@@ -1585,6 +2834,11 @@
             // Reset form
             subjectSelect.value = '';
             chapterSelect.value = '';
+            customSubjectInput.value = '';
+            document.getElementById('customTopic').value = '';
+            customSubjectGroup.style.display = 'none';
+            customTopicGroup.style.display = 'none';
+            chapterGroup.style.display = 'block';
            
             // Update UI
             renderCalendar();
@@ -1592,6 +2846,7 @@
             initProgressChart();
             initTimelineChart();
             renderTodoList();
+            renderBacklog();
            
             alert('Topic added to revision schedule successfully!');
         }
@@ -1763,6 +3018,103 @@
             });
         }
         
+        // Initialize detailed progress chart
+        function initDetailedProgressChart() {
+            const ctx = document.getElementById('detailedProgressChart').getContext('2d');
+            
+            // Calculate revisions by date for the last 30 days
+            const today = new Date();
+            const dates = [];
+            const completedData = [];
+            const scheduledData = [];
+            
+            for (let i = 29; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(today.getDate() - i);
+                dates.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+                
+                let completed = 0;
+                let scheduled = 0;
+                
+                topics.forEach(topic => {
+                    topic.revisionDates.forEach((revDate, index) => {
+                        const revisionDate = new Date(revDate);
+                        revisionDate.setHours(0, 0, 0, 0);
+                        
+                        if (revisionDate.getTime() === date.getTime()) {
+                            scheduled++;
+                            if (topic.completedRevisions[index]) {
+                                completed++;
+                            }
+                        }
+                    });
+                });
+                
+                completedData.push(completed);
+                scheduledData.push(scheduled);
+            }
+            
+            // Destroy existing chart if it exists
+            if (window.detailedProgressChartInstance) {
+                window.detailedProgressChartInstance.destroy();
+            }
+            
+            window.detailedProgressChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: dates,
+                    datasets: [
+                        {
+                            label: 'Completed Revisions',
+                            data: completedData,
+                            backgroundColor: 'rgba(67, 97, 238, 0.8)',
+                            borderColor: 'rgba(67, 97, 238, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Scheduled Revisions',
+                            data: scheduledData,
+                            backgroundColor: 'rgba(114, 9, 183, 0.8)',
+                            borderColor: 'rgba(114, 9, 183, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: 'var(--text)'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            ticks: {
+                                color: 'var(--text)',
+                                maxTicksLimit: 10
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            ticks: {
+                                color: 'var(--text)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
         // Initialize timeline chart
         function initTimelineChart() {
             const ctx = document.getElementById('timelineChart').getContext('2d');
@@ -1842,7 +3194,7 @@
                     scales: {
                         x: {
                             grid: {
-                                color: 'rgba(0, 0, 0, 0.1)'
+                                color: 'var(--border)'
                             },
                             ticks: {
                                 color: 'var(--text)'
@@ -1851,7 +3203,7 @@
                         y: {
                             beginAtZero: true,
                             grid: {
-                                color: 'rgba(0, 0, 0, 0.1)'
+                                color: 'var(--border)'
                             },
                             ticks: {
                                 color: 'var(--text)'
@@ -1878,6 +3230,7 @@
                         todaysRevisions.push({
                             id: topic.id,
                             subject: topic.subject,
+                            subjectName: topic.subjectName,
                             topicName: topic.topicName,
                             revisionIndex: index
                         });
@@ -1888,9 +3241,8 @@
             if (todaysRevisions.length > 0) {
                 let html = '<ul style="list-style: none; padding: 0;">';
                 todaysRevisions.forEach(rev => {
-                    const subjectName = subjects[rev.subject].name;
                     html += `<li style="padding: 8px 0; border-bottom: 1px solid var(--border);">
-                        <strong>${subjectName}:</strong> ${rev.topicName} <br>
+                        <strong>${rev.subjectName}:</strong> ${rev.topicName} <br>
                         <small style="color: var(--text-light);">Revision ${rev.revisionIndex + 1}</small>
                     </li>`;
                 });
@@ -1922,10 +3274,13 @@
                     const revisionDate = new Date(revDate);
                     revisionDate.setHours(0, 0, 0, 0);
                     
-                    if (revisionDate >= today && revisionDate <= nextWeek && !topic.completedRevisions[index]) {
+                    // Show revisions for today even if completed, so user can uncheck if needed
+                    if (revisionDate >= today && revisionDate <= nextWeek && 
+                        (!topic.completedRevisions[index] || revisionDate.getTime() === today.getTime())) {
                         upcomingRevisions.push({
                             id: topic.id,
                             subject: topic.subject,
+                            subjectName: topic.subjectName,
                             topicName: topic.topicName,
                             revisionIndex: index,
                             date: revisionDate,
@@ -1945,15 +3300,15 @@
             
             let html = '<ul class="todo-list">';
             upcomingRevisions.forEach(rev => {
-                const subjectName = subjects[rev.subject].name;
                 const dateString = rev.date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
                 const isToday = rev.date.getTime() === today.getTime();
+                const isFuture = rev.date.getTime() > today.getTime();
                 
                 html += `
-                    <li class="todo-item">
-                        <input type="checkbox" class="todo-checkbox" data-id="${rev.id}" data-index="${rev.revisionIndex}" ${rev.completed ? 'checked' : ''}>
+                    <li class="todo-item ${isFuture ? 'future' : ''}">
+                        <input type="checkbox" class="todo-checkbox" data-id="${rev.id}" data-index="${rev.revisionIndex}" ${rev.completed ? 'checked' : ''} ${isFuture ? 'disabled' : ''}>
                         <div class="todo-content">
-                            <div class="todo-subject">${subjectName}</div>
+                            <div class="todo-subject">${rev.subjectName}</div>
                             <div class="todo-topic">${rev.topicName}</div>
                             <div class="todo-revision">Revision ${rev.revisionIndex + 1}</div>
                         </div>
@@ -1975,15 +3330,156 @@
                     const topic = topics.find(t => t.id === id);
                     if (topic) {
                         topic.completedRevisions[index] = this.checked;
+                        topic.lastCompletionDate = new Date();
                         localStorage.setItem('topics', JSON.stringify(topics));
+                        
+                        // Show congratulations animation
+                        if (this.checked) {
+                            showCongratulations(topic, index);
+                        }
                         
                         // Update charts
                         initProgressChart();
                         initTimelineChart();
                         checkTodaysRevisions();
+                        renderTodoList();
+                        renderBacklog();
                     }
                 });
             });
+        }
+        
+        // Render backlog
+        function renderBacklog() {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const backlogRevisions = [];
+            
+            topics.forEach(topic => {
+                topic.revisionDates.forEach((revDate, index) => {
+                    const revisionDate = new Date(revDate);
+                    revisionDate.setHours(0, 0, 0, 0);
+                    
+                    if (revisionDate < today && !topic.completedRevisions[index]) {
+                        backlogRevisions.push({
+                            id: topic.id,
+                            subject: topic.subject,
+                            subjectName: topic.subjectName,
+                            topicName: topic.topicName,
+                            revisionIndex: index,
+                            date: revisionDate,
+                            completed: topic.completedRevisions[index]
+                        });
+                    }
+                });
+            });
+            
+            // Sort by date (oldest first)
+            backlogRevisions.sort((a, b) => a.date - b.date);
+            
+            if (backlogRevisions.length === 0) {
+                backlogList.innerHTML = '<p style="color: var(--text-light);">No missed revisions. Great job!</p>';
+                return;
+            }
+            
+            let html = '<ul class="todo-list">';
+            backlogRevisions.forEach(rev => {
+                const dateString = rev.date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+                
+                html += `
+                    <li class="todo-item past-due">
+                        <input type="checkbox" class="todo-checkbox" data-id="${rev.id}" data-index="${rev.revisionIndex}" ${rev.completed ? 'checked' : ''}>
+                        <div class="todo-content">
+                            <div class="todo-subject">${rev.subjectName}</div>
+                            <div class="todo-topic">${rev.topicName}</div>
+                            <div class="todo-revision">Revision ${rev.revisionIndex + 1}</div>
+                        </div>
+                        <div class="todo-date">${dateString}</div>
+                    </li>
+                `;
+            });
+            html += '</ul>';
+            
+            backlogList.innerHTML = html;
+            
+            // Add event listeners to checkboxes
+            document.querySelectorAll('#backlogList .todo-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    const index = parseInt(this.getAttribute('data-index'));
+                    
+                    // Find the topic and update completion status
+                    const topic = topics.find(t => t.id === id);
+                    if (topic) {
+                        topic.completedRevisions[index] = this.checked;
+                        topic.lastCompletionDate = new Date();
+                        localStorage.setItem('topics', JSON.stringify(topics));
+                        
+                        // Show congratulations animation
+                        if (this.checked) {
+                            showCongratulations(topic, index);
+                        }
+                        
+                        // Update charts
+                        initProgressChart();
+                        initTimelineChart();
+                        checkTodaysRevisions();
+                        renderTodoList();
+                        renderBacklog();
+                    }
+                });
+            });
+        }
+        
+        // Render progress history
+        function renderProgressHistory() {
+            const today = new Date();
+            const lastMonth = new Date(today);
+            lastMonth.setDate(today.getDate() - 30);
+            
+            let html = '<ul style="list-style: none; padding: 0;">';
+            
+            // Get all revisions in the last 30 days
+            const recentRevisions = [];
+            
+            topics.forEach(topic => {
+                topic.revisionDates.forEach((revDate, index) => {
+                    const revisionDate = new Date(revDate);
+                    if (revisionDate >= lastMonth && revisionDate <= today) {
+                        recentRevisions.push({
+                            topic: topic,
+                            revisionIndex: index,
+                            date: revisionDate,
+                            completed: topic.completedRevisions[index]
+                        });
+                    }
+                });
+            });
+            
+            // Sort by date (newest first)
+            recentRevisions.sort((a, b) => b.date - a.date);
+            
+            if (recentRevisions.length === 0) {
+                html += '<li style="padding: 10px; color: var(--text-light);">No revision activity in the last 30 days.</li>';
+            } else {
+                recentRevisions.forEach(rev => {
+                    const dateString = rev.date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+                    const status = rev.completed ? 
+                        `<span style="color: var(--success);">✓ Completed</span>` : 
+                        `<span style="color: var(--warning);">✗ Pending</span>`;
+                    
+                    html += `
+                        <li style="padding: 10px; border-bottom: 1px solid var(--border);">
+                            <div><strong>${rev.topic.subjectName}: ${rev.topic.topicName}</strong></div>
+                            <div>Revision ${rev.revisionIndex + 1} - ${dateString} - ${status}</div>
+                        </li>
+                    `;
+                });
+            }
+            
+            html += '</ul>';
+            progressHistory.innerHTML = html;
         }
 
         // Check if we should show notification
@@ -2010,7 +3506,7 @@
             let message = 'You have revisions scheduled for today:\n\n';
            
             revisions.forEach((rev, index) => {
-                const subjectName = subjects[rev.subject].name;
+                const subjectName = rev.subject === 'custom' ? 'Custom Subject' : subjects[rev.subject].name;
                 message += `${index + 1}. ${subjectName}: ${rev.topicName}\n`;
             });
            
@@ -2028,6 +3524,120 @@
             notificationModal.classList.remove('active');
             // Scroll to today's revisions section
             document.querySelector('.dashboard').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Flip flashcard
+        function flipFlashcard() {
+            flashcard.classList.toggle('flipped');
+        }
+        
+        // Show previous flashcard
+        function showPrevFlashcard() {
+            if (currentFlashcardIndex > 0) {
+                currentFlashcardIndex--;
+                updateFlashcard();
+            }
+        }
+        
+        // Show next flashcard
+        function showNextFlashcard() {
+            if (currentFlashcardIndex < flashcards.length - 1) {
+                currentFlashcardIndex++;
+                updateFlashcard();
+            }
+        }
+        
+        // Update flashcard content
+        function updateFlashcard() {
+            const card = flashcards[currentFlashcardIndex];
+            flashcardTitle.textContent = card.title;
+            flashcardContent.textContent = card.content;
+            flashcardCounter.textContent = `${currentFlashcardIndex + 1}/${flashcards.length}`;
+            
+            // Reset card to front
+            flashcard.classList.remove('flipped');
+            
+            // Update button states
+            prevFlashcard.disabled = currentFlashcardIndex === 0;
+            nextFlashcard.disabled = currentFlashcardIndex === flashcards.length - 1;
+        }
+        
+        // Show congratulations animation
+        function showCongratulations(topic, revisionIndex) {
+            congratulationsMessage.textContent = `Great job completing revision ${revisionIndex + 1} of "${topic.topicName}"! Keep up the good work.`;
+            congratulations.classList.add('active');
+        }
+        
+        // Close congratulations animation
+        function closeCongratulationsFunc() {
+            congratulations.classList.remove('active');
+        }
+
+        // Schedule daily notification at 5 AM
+        function scheduleDailyNotification() {
+            // Calculate time until next 5 AM
+            const now = new Date();
+            const target = new Date();
+            target.setHours(5, 0, 0, 0);
+            
+            // If it's already past 5 AM today, schedule for tomorrow
+            if (now > target) {
+                target.setDate(target.getDate() + 1);
+            }
+            
+            const timeUntilNotification = target.getTime() - now.getTime();
+            
+            // Schedule the notification
+            setTimeout(() => {
+                // Check if there are revisions for today
+                const todaysRevisions = getRevisionsForDate(new Date());
+                if (todaysRevisions.length > 0) {
+                    // Show notification
+                    showNotification(todaysRevisions);
+                }
+                
+                // Schedule next notification for tomorrow
+                scheduleDailyNotification();
+            }, timeUntilNotification);
+        }
+
+        // Check for auto-removal of completed revisions
+        function checkAutoRemoval() {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            // Check if we've already done auto-removal today
+            const lastAutoRemoval = localStorage.getItem('lastAutoRemoval');
+            if (lastAutoRemoval === today.toDateString()) {
+                return;
+            }
+            
+            // Reset completed revisions for past days (not today)
+            topics.forEach(topic => {
+                topic.revisionDates.forEach((revDate, index) => {
+                    const revisionDate = new Date(revDate);
+                    revisionDate.setHours(0, 0, 0, 0);
+                    
+                    // If this revision was for a past day and was completed, keep it completed
+                    // Only remove from display, not from completion status
+                    if (revisionDate.getTime() < today.getTime() && topic.completedRevisions[index]) {
+                        // We don't reset the completion status, we just don't show it in the to-do list
+                        // This is handled in renderTodoList function
+                    }
+                });
+            });
+            
+            // Save updated topics
+            localStorage.setItem('topics', JSON.stringify(topics));
+            
+            // Update last auto-removal date
+            localStorage.setItem('lastAutoRemoval', today.toDateString());
+            
+            // Update UI
+            renderTodoList();
+            renderBacklog();
+            initProgressChart();
+            initTimelineChart();
         }
 
         // Initialize the app when DOM is loaded
