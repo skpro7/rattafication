@@ -20,7 +20,7 @@
             --card-bg: rgba(238, 240, 233, 0.85);
             --sidebar-bg: rgba(201, 225, 249, 0.85);
             --border: #066e20;
-            --text: #03234f;
+            --text: #2a405e;
             --text-light: #64748b;
         }
 
@@ -1641,7 +1641,7 @@
         .flip-card-back {
             background: linear-gradient(120deg, var(--accent) 30%, var(--primary) 88%,
                var(--primary-light) 40%, var(--light) 78%);
-            color: white;
+            color: var(--text);
             transform: rotateY(180deg);
             overflow-y: auto;
         }
@@ -2057,7 +2057,7 @@
                                     <p>Click to flip the card</p>
                                 </div>
                                 <div class="flip-card-back">
-                                    <p class="title">Active Recall</p>
+                                    <p class="title" id="flashcardBackTitle">Active Recall</p>
                                     <p id="flashcardContent">Regularly test yourself instead of just re-reading. This strengthens memory pathways and improves retention.</p>
                                 </div>
                             </div>
@@ -2290,6 +2290,7 @@
         const progressHistory = document.getElementById('progressHistory');
         const flashcard = document.getElementById('flashcard');
         const flashcardTitle = document.getElementById('flashcardTitle');
+        const flashcardBackTitle = document.getElementById('flashcardBackTitle');
         const flashcardContent = document.getElementById('flashcardContent');
         const prevFlashcard = document.getElementById('prevFlashcard');
         const nextFlashcard = document.getElementById('nextFlashcard');
@@ -3551,6 +3552,7 @@
         function updateFlashcard() {
             const card = flashcards[currentFlashcardIndex];
             flashcardTitle.textContent = card.title;
+            flashcardBackTitle.textContent = card.title;
             flashcardContent.textContent = card.content;
             flashcardCounter.textContent = `${currentFlashcardIndex + 1}/${flashcards.length}`;
             
