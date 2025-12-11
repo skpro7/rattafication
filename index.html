@@ -3849,7 +3849,7 @@
         })();
         
         const welcomeScreen = document.getElementById('welcomeScreen');
-        const appContent = document.getElementById('appContent');
+        const appContent = document.querySelector('.container');
         const userNameInput = document.getElementById('userName');
         const startBtn = document.getElementById('startBtn');
         const displayName = document.getElementById('displayName');
@@ -4181,7 +4181,10 @@
                 };
 
                 iconOption.addEventListener('click', handleIconSelect, { passive: false });
-                iconOption.addEventListener('touchend', handleIconSelect, { passive: false });
+                iconOption.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    handleIconSelect.call(this, e);
+                }, { passive: false });
                 iconOption.addEventListener('keypress', function(e) {
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
@@ -4379,9 +4382,15 @@
         }
 
         function startDrag(e) {
+            e.preventDefault();
             isDragging = true;
-            dragStartX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-            dragStartY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+            if (e.type.includes('touch')) {
+                dragStartX = e.touches[0].clientX;
+                dragStartY = e.touches[0].clientY;
+            } else {
+                dragStartX = e.clientX;
+                dragStartY = e.clientY;
+            }
             cropperContainer.style.cursor = 'grabbing';
         }
 
@@ -4915,6 +4924,11 @@
                     if (!dayElement.querySelector('.day-number')) return;
                     openDateTopicsModal(new Date(dayElement.dataset.date));
                 });
+                dayElement.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    if (!dayElement.querySelector('.day-number')) return;
+                    openDateTopicsModal(new Date(dayElement.dataset.date));
+                });
                 const revisionTopics = getRevisionsForDate(date);
                 if (revisionTopics.length > 0) {
                     dayElement.classList.add('revision');
@@ -5005,11 +5019,6 @@
             };
             return map[subjectKey] || '#6c757d';
         }
-
-        closeDateTopics.addEventListener('click', closeDateTopicsModal);
-        dateTopicsModal.addEventListener('click', (e) => {
-            if (!e.target.closest('.date-topics-content')) closeDateTopicsModal();
-        });
 
         function showPreviousMonth() {
             currentDate.setMonth(currentDate.getMonth() - 1);
@@ -5299,6 +5308,12 @@
                     this.classList.add('active');
                     updateTimelineChart();
                 });
+                btn.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    document.querySelectorAll('.filter-btn[data-days]').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    updateTimelineChart();
+                });
             });
         }
 
@@ -5422,6 +5437,16 @@
                         checkbox.dispatchEvent(new Event('change', { bubbles: true }));
                     }
                 });
+                content.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const todoItem = this.closest('.todo-item');
+                    const checkbox = todoItem.querySelector('.todo-checkbox');
+                    if (checkbox && !checkbox.disabled) {
+                        checkbox.checked = !checkbox.checked;
+                        checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                });
             });
             document.querySelectorAll('.todo-item').forEach(item => {
                 item.addEventListener('click', function(e) {
@@ -5433,9 +5458,24 @@
                         }
                     }
                 });
+                item.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    if (!e.target.closest('.delete-topic-btn')) {
+                        const checkbox = this.querySelector('.todo-checkbox');
+                        if (checkbox && !checkbox.disabled && !e.target.closest('.todo-checkbox')) {
+                            checkbox.checked = !checkbox.checked;
+                            checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+                    }
+                });
             });
             document.querySelectorAll('.delete-topic-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    deleteTopic(id);
+                });
+                btn.addEventListener('touchend', function(e) {
+                    e.preventDefault();
                     const id = parseInt(this.getAttribute('data-id'));
                     deleteTopic(id);
                 });
@@ -5509,6 +5549,11 @@
             });
             document.querySelectorAll('#backlogList .delete-topic-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    deleteTopic(id);
+                });
+                btn.addEventListener('touchend', function(e) {
+                    e.preventDefault();
                     const id = parseInt(this.getAttribute('data-id'));
                     deleteTopic(id);
                 });
@@ -5675,62 +5720,278 @@
 
         function setupEventListeners() {
             startBtn.addEventListener('click', startApp);
+            startBtn.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                startApp();
+            });
+
+            selectIconBtn.addEventListener('click', openIconModal);
+            selectIconBtn.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                openIconModal();
+            });
+
+            selectPicBtn.addEventListener('click', openPictureSelection);
+            selectPicBtn.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                openPictureSelection();
+            });
+
             menuBtn.addEventListener('click', toggleDrawer);
+            menuBtn.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                toggleDrawer();
+            });
+
             drawerCancel.addEventListener('click', toggleDrawer);
+            drawerCancel.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                toggleDrawer();
+            });
+
             dashboardLink.addEventListener('click', closeDrawerAndGoToDashboard);
+            dashboardLink.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                closeDrawerAndGoToDashboard(e);
+            });
+
             subjectSelect.addEventListener('change', handleSubjectChange);
             chapterSelect.addEventListener('change', handleChapterChange);
+            
             addTopicBtn.addEventListener('click', addTopic);
+            addTopicBtn.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                addTopic();
+            });
+
             prevMonthBtn.addEventListener('click', showPreviousMonth);
+            prevMonthBtn.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                showPreviousMonth();
+            });
+
             nextMonthBtn.addEventListener('click', showNextMonth);
+            nextMonthBtn.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                showNextMonth();
+            });
+
+            closeDateTopics.addEventListener('click', closeDateTopicsModal);
+            closeDateTopics.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                closeDateTopicsModal();
+            });
+
+            dateTopicsModal.addEventListener('click', (e) => {
+                if (!e.target.closest('.date-topics-content')) closeDateTopicsModal();
+            });
+            dateTopicsModal.addEventListener('touchend', (e) => {
+                if (!e.target.closest('.date-topics-content')) {
+                    e.preventDefault();
+                    closeDateTopicsModal();
+                }
+            });
+
             aboutLink.addEventListener('click', showAbout);
+            aboutLink.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                showAbout(e);
+            });
+
             doubtsLink.addEventListener('click', showDoubts);
+            doubtsLink.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                showDoubts(e);
+            });
+
             goToMenuFromAbout.addEventListener('click', goBackToMenu);
+            goToMenuFromAbout.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                goBackToMenu(e);
+            });
+
             goToMenuFromDoubts.addEventListener('click', goBackToMenu);
+            goToMenuFromDoubts.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                goBackToMenu(e);
+            });
+
             settingsLink.addEventListener('click', showSettings);
+            settingsLink.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                showSettings(e);
+            });
+
             progressLink.addEventListener('click', showProgressModal);
+            progressLink.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                showProgressModal(e);
+            });
+
             shareAppLink.addEventListener('click', showShareModal);
+            shareAppLink.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                showShareModal(e);
+            });
+
             notificationLater.addEventListener('click', closeNotification);
+            notificationLater.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                closeNotification();
+            });
+
             notificationGo.addEventListener('click', goToRevisions);
+            notificationGo.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                goToRevisions();
+            });
+
             copyLinkBtn.addEventListener('click', copyShareLink);
+            copyLinkBtn.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                copyShareLink();
+            });
+
             closeShareModal.addEventListener('click', closeShareModalFunc);
+            closeShareModal.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                closeShareModalFunc();
+            });
+
             closeProgress.addEventListener('click', closeProgressModal);
+            closeProgress.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                closeProgressModal();
+            });
+
             flashcard.addEventListener('click', flipFlashcard);
+            flashcard.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                flipFlashcard();
+            });
+
             prevFlashcard.addEventListener('click', showPrevFlashcard);
+            prevFlashcard.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                showPrevFlashcard();
+            });
+
             nextFlashcard.addEventListener('click', showNextFlashcard);
+            nextFlashcard.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                showNextFlashcard();
+            });
+
             closeCongratulations.addEventListener('click', closeCongratulationsFunc);
-            selectIconBtn.addEventListener('click', openIconModal);
-            selectIconBtn.addEventListener('touchend', openIconModal);
-            selectPicBtn.addEventListener('click', openPictureSelection);
-            selectPicBtn.addEventListener('touchend', openPictureSelection);
+            closeCongratulations.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                closeCongratulationsFunc();
+            });
+
             cancelIconSelect.addEventListener('click', closeIconModal);
-            cancelIconSelect.addEventListener('touchend', closeIconModal);
+            cancelIconSelect.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                closeIconModal();
+            });
+
             confirmIconSelect.addEventListener('click', confirmIconSelection);
-            confirmIconSelect.addEventListener('touchend', confirmIconSelection);
+            confirmIconSelect.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                confirmIconSelection();
+            });
+
             cancelCrop.addEventListener('click', cancelCropping);
-            cancelCrop.addEventListener('touchend', cancelCropping);
+            cancelCrop.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                cancelCropping();
+            });
+
             confirmCrop.addEventListener('click', confirmCropping);
-            confirmCrop.addEventListener('touchend', confirmCropping);
+            confirmCrop.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                confirmCropping();
+            });
+
             zoomInBtn.addEventListener('click', zoomIn);
+            zoomInBtn.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                zoomIn();
+            });
+
             zoomOutBtn.addEventListener('click', zoomOut);
+            zoomOutBtn.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                zoomOut();
+            });
+
             zoomSlider.addEventListener('input', handleZoomSlider);
+
             cropperContainer.addEventListener('mousedown', startDrag);
             cropperContainer.addEventListener('mousemove', moveDrag);
             cropperContainer.addEventListener('mouseup', endDrag);
             cropperContainer.addEventListener('mouseleave', endDrag);
-            cropperContainer.addEventListener('touchstart', startDrag);
-            cropperContainer.addEventListener('touchmove', moveDrag);
-            cropperContainer.addEventListener('touchend', endDrag);
+            
+            cropperContainer.addEventListener('touchstart', startDrag, { passive: false });
+            cropperContainer.addEventListener('touchmove', moveDrag, { passive: false });
+            cropperContainer.addEventListener('touchend', endDrag, { passive: false });
+            cropperContainer.addEventListener('touchcancel', endDrag, { passive: false });
+
             closeSettings.addEventListener('click', closeSettingsModal);
+            closeSettings.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                closeSettingsModal();
+            });
+
             saveNotificationTime.addEventListener('click', saveNotificationTimeFunc);
+            saveNotificationTime.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                saveNotificationTimeFunc();
+            });
+
             changeAvatarBtn.addEventListener('click', openAvatarChange);
+            changeAvatarBtn.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                openAvatarChange();
+            });
+
             uploadPicSettingsBtn.addEventListener('click', openPictureSelectionFromSettings);
+            uploadPicSettingsBtn.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                openPictureSelectionFromSettings();
+            });
+
             saveUserSettings.addEventListener('click', saveUserSettingsFunc);
+            saveUserSettings.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                saveUserSettingsFunc();
+            });
+
             resetAppBtn.addEventListener('click', openResetConfirmModal);
+            resetAppBtn.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                openResetConfirmModal();
+            });
+
             cancelReset.addEventListener('click', closeResetConfirmModal);
+            cancelReset.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                closeResetConfirmModal();
+            });
+
             confirmReset.addEventListener('click', performAppReset);
+            confirmReset.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                performAppReset();
+            });
+
             resetConfirmInput.addEventListener('input', validateResetInput);
+
             timelineFilterToggle.addEventListener('click', toggleTimelineFilters);
+            timelineFilterToggle.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                toggleTimelineFilters();
+            });
+
             document.querySelectorAll('.theme-option').forEach(option => {
                 option.addEventListener('click', function() {
                     const theme = this.getAttribute('data-theme');
@@ -5739,9 +6000,23 @@
                     this.classList.add('active');
                     localStorage.setItem('currentTheme', theme);
                 });
+                option.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    const theme = this.getAttribute('data-theme');
+                    applyTheme(theme);
+                    document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    localStorage.setItem('currentTheme', theme);
+                });
             });
+
             document.querySelectorAll('.share-option').forEach(option => {
                 option.addEventListener('click', function() {
+                    const platform = this.getAttribute('data-platform');
+                    shareOnPlatform(platform);
+                });
+                option.addEventListener('touchend', function(e) {
+                    e.preventDefault();
                     const platform = this.getAttribute('data-platform');
                     shareOnPlatform(platform);
                 });
